@@ -1,0 +1,286 @@
+openapi: 3.0.1
+info:
+  title: OpenAPI definition
+  version: v0
+servers:
+  - url: https://sanity-provider.connectors.stg.smartling.net
+    description: Generated server url
+paths:
+  /v2/projects/{projectId}/integrations/sanity/dictionary/sanity-projects:
+    get:
+      tags:
+        - dictionary-controller
+      operationId: getSanityProjects
+      parameters:
+        - name: projectId
+          in: path
+          required: true
+          schema:
+            type: string
+      responses:
+        "200":
+          description: OK
+          content:
+            '*/*':
+              schema:
+                $ref: '#/components/schemas/RestApiResponseListResponseSanityProjectDTO'
+  /v2/projects/{projectId}/integrations/sanity/dictionary/sanity-projects/{sanityProjectId}/datasets:
+    parameters:
+      - name: projectId
+        in: path
+        required: true
+        schema:
+          type: string
+    get:
+      tags:
+        - dictionary-controller
+      operationId: getProjectDatasets
+      parameters:
+        - name: sanityProjectId
+          in: path
+          required: true
+          schema:
+            type: string
+      responses:
+        "200":
+          description: OK
+          content:
+            '*/*':
+              schema:
+                $ref: '#/components/schemas/RestApiResponseListResponseProjectDatasetDTO'
+  /v2/projects/{projectId}/integrations/sanity/dictionary/locales:
+    parameters:
+      - name: projectId
+        in: path
+        required: true
+        schema:
+          type: string
+    get:
+      tags:
+        - dictionary-controller
+      operationId: getExternalLocales
+      responses:
+        "200":
+          description: OK
+          content:
+            '*/*':
+              schema:
+                $ref: '#/components/schemas/RestApiResponseListResponseLocaleDTO'
+  /v2/projects/{projectId}/integrations/sanity/dictionary/custom-property-actions:
+    get:
+      tags:
+        - dictionary-controller
+      operationId: getCustomPropertyActions
+      parameters:
+        - name: projectId
+          in: path
+          required: true
+          schema:
+            type: string
+      responses:
+        "200":
+          description: OK
+          content:
+            '*/*':
+              schema:
+                $ref: '#/components/schemas/RestApiResponseListResponsePropertyTypeTranslationActionsResponseDTO'
+  /v2/projects/{projectId}/integrations/sanity/dictionary/content-types:
+    get:
+      tags:
+        - dictionary-controller
+      operationId: listContentTypes
+      parameters:
+        - name: projectId
+          in: path
+          required: true
+          schema:
+            type: string
+      responses:
+        "200":
+          description: OK
+          content:
+            '*/*':
+              schema:
+                $ref: '#/components/schemas/RestApiResponseListResponseContentTypeDTO'
+components:
+  schemas:
+    RestApiResponseListResponseSanityProjectDTO:
+      type: object
+      properties:
+        response:
+          $ref: '#/components/schemas/ResponseListResponseSanityProjectDTO'
+    ResponseListResponseSanityProjectDTO:
+      allOf:
+        - $ref: '#/components/schemas/BasicListResponse'
+        - type: object
+          properties:
+            data:
+              type: object
+              properties:
+                totalCount:
+                  type: integer
+                items:
+                  type: array
+                  items:
+                    type: object
+                    properties:
+                      id:
+                        type: string
+                      name:
+                        type: string
+    RestApiResponseListResponseProjectDatasetDTO:
+      type: object
+      properties:
+        response:
+          $ref: '#/components/schemas/ResponseListResponseProjectDatasetDTO'
+    ResponseListResponseProjectDatasetDTO:
+      allOf:
+        - $ref: '#/components/schemas/BasicListResponse'
+        - type: object
+          properties:
+            data:
+              type: object
+              properties:
+                totalCount:
+                  type: integer
+                items:
+                  type: array
+                  items:
+                    type: object
+                    properties:
+                      name:
+                        type: string
+                      aclMode:
+                        type: string
+    RestApiResponseListResponseLocaleDTO:
+      type: object
+      properties:
+        response:
+          $ref: '#/components/schemas/ResponseListResponseLocaleDTO'
+    ResponseListResponseLocaleDTO:
+      allOf:
+        - $ref: '#/components/schemas/BasicListResponse'
+        - type: object
+          properties:
+            data:
+              type: object
+              properties:
+                totalCount:
+                  type: integer
+                items:
+                  type: array
+                  items:
+                    type: object
+                    properties:
+                      externalLocaleId:
+                        type: string
+                      name:
+                        type: string
+                      externalLocaleMetadata:
+                        type: object
+    RestApiResponseListResponseContentTypeDTO:
+      type: object
+      properties:
+        response:
+          $ref: '#/components/schemas/ResponseListResponseContentTypeDTO'
+    ResponseListResponseContentTypeDTO:
+      allOf:
+        - $ref: '#/components/schemas/BasicListResponse'
+        - type: object
+          properties:
+            data:
+              type: object
+              properties:
+                totalCount:
+                  type: integer
+                items:
+                  type: array
+                  items:
+                    type: object
+                    properties:
+                      uid:
+                        type: string
+                      name:
+                        type: string
+                      assetType:
+                        type: string
+                      properties:
+                        type: array
+                        items:
+                          type: object
+                          properties:
+                            key:
+                              type: object
+                              properties:
+                                contentTypeUid:
+                                  type: string
+                                fieldPath:
+                                  type: string
+                            type:
+                              type: string
+                            uid:
+                              type: string
+                            name:
+                              type: string
+                            defaultAction:
+                              type: string
+                              enum:
+                                - DO_NOT_TRANSLATE
+                                - TEXT
+                                - MARKDOWN
+                                - HTML
+    RestApiResponseListResponsePropertyTypeTranslationActionsResponseDTO:
+      type: object
+      properties:
+        response:
+          $ref: '#/components/schemas/ResponseListResponsePropertyTypeTranslationActionsResponseDTO'
+    ResponseListResponsePropertyTypeTranslationActionsResponseDTO:
+      allOf:
+        - $ref: '#/components/schemas/BasicListResponse'
+        - type: object
+          properties:
+            data:
+              type: object
+              properties:
+                totalCount:
+                  type: integer
+                items:
+                  type: array
+                  items:
+                    type: object
+                    properties:
+                      type:
+                        type: string
+                      actions:
+                        type: array
+                        items:
+                          type: object
+                          properties:
+                            name:
+                              type: string
+                            description:
+                              type: string
+    BasicListResponse:
+      type: object
+      properties:
+        code:
+          $ref: '#/components/schemas/ResponseCodes'
+    ResponseCodes:
+      type: string
+      enum:
+        - SUCCESS
+        - GENERAL_ERROR
+        - VALIDATION_ERROR
+        - AUTHENTICATION_ERROR
+        - AUTHORIZATION_ERROR
+        - NOT_FOUND_ERROR
+        - MAINTENANCE_MODE_ERROR
+        - INSUFFICIENT_FUNDS_ERROR
+        - FILE_ALREADY_EXISTS_ERROR
+        - SERVICE_BUSY
+        - RESOURCE_LOCKED
+        - MAX_OPERATIONS_LIMIT_EXCEEDED
+        - ACCEPTED
+        - CREATED
+        - NO_CONTENT
+        - GONE

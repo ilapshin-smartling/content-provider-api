@@ -1,0 +1,393 @@
+openapi: 3.0.1
+info:
+  title: OpenAPI definition
+  version: v0
+servers:
+  - url: https://sanity-provider.connectors.stg.smartling.net
+    description: Generated server url
+paths:
+  /v2/projects/{projectId}/integrations/sanity/assets/{assetUid}/locales/{localeId}:
+    parameters:
+      - name: projectId
+        in: path
+        required: true
+        schema:
+          type: string
+    post:
+      tags:
+        - assets-controller
+      operationId: saveAssetTranslation
+      parameters:
+        - name: assetUid
+          in: path
+          required: true
+          schema:
+            type: string
+        - name: localeId
+          in: path
+          required: true
+          schema:
+            type: string
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/DeliverTranslationsRequest'
+        required: true
+      responses:
+        "200":
+          description: OK
+          content:
+            '*/*':
+              schema:
+                $ref: '#/components/schemas/RestApiResponseTargetAssetDetails'
+  /v2/projects/{projectId}/integrations/sanity/assets:
+    parameters:
+      - name: projectId
+        in: path
+        required: true
+        schema:
+          type: string
+    get:
+      tags:
+        - assets-controller
+      operationId: getAssetList
+      parameters:
+        - name: listAssetsRequest
+          in: query
+          required: true
+          schema:
+            $ref: '#/components/schemas/ListAssetsRequest'
+      responses:
+        "200":
+          description: OK
+          content:
+            '*/*':
+              schema:
+                $ref: '#/components/schemas/RestApiResponseListWithNextPageTokenAssetDetails'
+  /v2/projects/{projectId}/integrations/sanity/assets/{assetUid}/related:
+    parameters:
+      - name: projectId
+        in: path
+        required: true
+        schema:
+          type: string
+    get:
+      tags:
+        - assets-controller
+      operationId: getRelatedAssets
+      parameters:
+        - name: assetUid
+          in: path
+          required: true
+          schema:
+            type: string
+      responses:
+        "200":
+          description: OK
+          content:
+            '*/*':
+              schema:
+                $ref: '#/components/schemas/RestApiResponseListResponseAssetDetails'
+  /v2/projects/{projectId}/integrations/sanity/assets/{assetUid}/preview:
+    parameters:
+      - name: projectId
+        in: path
+        required: true
+        schema:
+          type: string
+    get:
+      tags:
+        - assets-controller
+      operationId: getPreview
+      parameters:
+        - name: assetUid
+          in: path
+          required: true
+          schema:
+            type: string
+      responses:
+        "200":
+          description: OK
+          content:
+            '*/*':
+              schema:
+                $ref: '#/components/schemas/RestApiResponsePreviewDTO'
+  /v2/projects/{projectId}/integrations/sanity/assets/{assetUid}/details:
+    parameters:
+      - name: projectId
+        in: path
+        required: true
+        schema:
+          type: string
+    get:
+      tags:
+        - assets-controller
+      operationId: getAssetDetails
+      parameters:
+        - name: assetUid
+          in: path
+          required: true
+          schema:
+            type: string
+      responses:
+        "200":
+          description: OK
+          content:
+            '*/*':
+              schema:
+                $ref: '#/components/schemas/RestApiResponseAssetDetails'
+  /v2/projects/{projectId}/integrations/sanity/assets/{assetUid}/content:
+    parameters:
+      - name: projectId
+        in: path
+        required: true
+        schema:
+          type: string
+    get:
+      tags:
+        - assets-controller
+      operationId: getAssetContent
+      parameters:
+        - name: assetUid
+          in: path
+          required: true
+          schema:
+            type: string
+      responses:
+        "200":
+          description: OK
+          content:
+            '*/*':
+              schema:
+                $ref: '#/components/schemas/RestApiResponseAssetContentDTO'
+components:
+  schemas:
+    DeliverTranslationsRequest:
+      required:
+        - content
+      type: object
+      properties:
+        content:
+          type: string
+    RestApiResponseTargetAssetDetails:
+      type: object
+      properties:
+        response:
+          $ref: '#/components/schemas/ResponseTargetAssetDetails'
+    ResponseTargetAssetDetails:
+      type: object
+      properties:
+        code:
+          $ref: '#/components/schemas/ResponseCodes'
+        data:
+          $ref: '#/components/schemas/TargetAssetDetails'
+    TargetAssetDetails:
+      type: object
+      properties:
+        targetAssetUid:
+          type: string
+        title:
+          type: string
+        fileUri:
+          type: string
+    ListAssetsRequest:
+      required:
+        - assetType
+        - limit
+      type: object
+      properties:
+        nextPageToken:
+          type: string
+        limit:
+          type: integer
+          format: int32
+        assetType:
+          type: string
+          enum:
+            - DOCUMENT
+        sortBy:
+          type: string
+        orderBy:
+          type: string
+          enum:
+            - ASC
+            - DESC
+        contentTypeUid:
+          type: string
+        searchTerm:
+          type: string
+    RestApiResponseListWithNextPageTokenAssetDetails:
+      type: object
+      properties:
+        response:
+          $ref: '#/components/schemas/ResponseListWithNextPageTokenAssetDetails'
+    ResponseListWithNextPageTokenAssetDetails:
+      type: object
+      properties:
+        code:
+          $ref: '#/components/schemas/ResponseCodes'
+        items:
+          type: array
+          items:
+            $ref: '#/components/schemas/AssetDetails'
+    RestApiResponseListResponseAssetDetails:
+      type: object
+      properties:
+        response:
+          $ref: '#/components/schemas/ResponseListResponseAssetDetails'
+    ResponseListResponseAssetDetails:
+      type: object
+      properties:
+        code:
+          $ref: '#/components/schemas/ResponseCodes'
+        items:
+          type: array
+          items:
+            $ref: '#/components/schemas/AssetDetails'
+    RestApiResponsePreviewDTO:
+      type: object
+      properties:
+        response:
+          $ref: '#/components/schemas/ResponsePreviewDTO'
+    ResponsePreviewDTO:
+      type: object
+      properties:
+        code:
+          $ref: '#/components/schemas/ResponseCodes'
+        data:
+          $ref: '#/components/schemas/PreviewDTO'
+    PreviewDTO:
+      type: object
+      properties:
+        previewUrl:
+          type: string
+        publicUrl:
+          type: string
+        body:
+          type: string
+    RestApiResponseAssetDetails:
+      type: object
+      properties:
+        response:
+          $ref: '#/components/schemas/ResponseAssetDetails'
+    ResponseAssetDetails:
+      type: object
+      properties:
+        code:
+          $ref: '#/components/schemas/ResponseCodes'
+        data:
+          $ref: '#/components/schemas/AssetDetails'
+    RestApiResponseAssetContentDTO:
+      type: object
+      properties:
+        response:
+          $ref: '#/components/schemas/ResponseAssetContentDTO'
+    ResponseAssetContentDTO:
+      type: object
+      properties:
+        code:
+          $ref: '#/components/schemas/ResponseCodes'
+        data:
+          $ref: '#/components/schemas/AssetContent'
+    AssetContent:
+      type: object
+      properties:
+        content:
+          type: string
+        contentHash:
+          type: string
+        directives:
+          $ref: '#/components/schemas/Directives'
+    Directives:
+      type: object
+      properties:
+        smartling.translate_paths:
+          $ref: '#/components/schemas/TranslatePathList'
+        smartling.string_format_paths:
+          $ref: '#/components/schemas/FormatPathList'
+        smartling.placeholder_format_custom:
+          type: string
+        smartling.namespace:
+          type: string
+        smartling.file_uri_as_namespace:
+          type: string
+    FormatPathList:
+      type: object
+      properties:
+        formatPaths:
+          type: array
+          items:
+            $ref: '#/components/schemas/FormatPath'
+    FormatPath:
+      type: object
+      properties:
+        type:
+          $ref: '#/components/schemas/FormatType'
+        values:
+          type: array
+          items:
+            type: string
+    FormatType:
+      type: string
+      enum:
+        - TEXT
+        - HTML
+        - MARKDOWN
+    TranslatePathList:
+      type: object
+      properties:
+        paths:
+          type: array
+          items:
+            $ref: '#/components/schemas/TranslatePath'
+    TranslatePath:
+      type: object
+      properties:
+        path:
+          type: string
+        key:
+          type: string
+        character_limit:
+          type: string
+        instruction:
+          type: string
+    AssetDetails:
+      type: object
+      properties:
+        assetUid:
+          type: string
+        title:
+          type: string
+        contentTypeUid:
+          type: string
+        updatedAt:
+          type: string
+          format: date-time
+        fileUri:
+          type: string
+        isLocalizable:
+          type: boolean
+        externalLink:
+          type: string
+        identity:
+          type: string
+    ResponseCodes:
+      type: string
+      enum:
+        - SUCCESS
+        - GENERAL_ERROR
+        - VALIDATION_ERROR
+        - AUTHENTICATION_ERROR
+        - AUTHORIZATION_ERROR
+        - NOT_FOUND_ERROR
+        - MAINTENANCE_MODE_ERROR
+        - INSUFFICIENT_FUNDS_ERROR
+        - FILE_ALREADY_EXISTS_ERROR
+        - SERVICE_BUSY
+        - RESOURCE_LOCKED
+        - MAX_OPERATIONS_LIMIT_EXCEEDED
+        - ACCEPTED
+        - CREATED
+        - NO_CONTENT
+        - GONE

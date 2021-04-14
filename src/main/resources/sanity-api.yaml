@@ -1,0 +1,1004 @@
+openapi: 3.0.1
+info:
+  title: OpenAPI definition
+  version: v0
+servers:
+  - url: https://sanity-provider.connectors.stg.smartling.net
+    description: Generated server url
+paths:
+  /v2/projects/{projectId}/integrations/sanity/settings/user:
+    get:
+      tags:
+        - settings-controller
+      operationId: getUserSettings
+      parameters:
+        - name: projectId
+          in: path
+          required: true
+          schema:
+            type: string
+      responses:
+        "200":
+          description: OK
+          content:
+            '*/*':
+              schema:
+                $ref: '#/components/schemas/RestApiResponseUserSettingsDTO'
+    put:
+      tags:
+        - settings-controller
+      operationId: updateUserSettings
+      parameters:
+        - name: projectId
+          in: path
+          required: true
+          schema:
+            type: string
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/UpdateUserSettingsRequest'
+        required: true
+      responses:
+        "200":
+          description: OK
+          content:
+            '*/*':
+              schema:
+                $ref: '#/components/schemas/RestApiResponseUserSettingsDTO'
+  /v2/projects/{projectId}/integrations/sanity/settings/system:
+    get:
+      tags:
+        - settings-controller
+      operationId: getSystemSettings
+      parameters:
+        - name: projectId
+          in: path
+          required: true
+          schema:
+            type: string
+      responses:
+        "200":
+          description: OK
+          content:
+            '*/*':
+              schema:
+                $ref: '#/components/schemas/RestApiResponseSystemSettingsDTO'
+    put:
+      tags:
+        - settings-controller
+      operationId: updateSystemSettings
+      parameters:
+        - name: projectId
+          in: path
+          required: true
+          schema:
+            type: string
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/UpdateSystemSettingsRequest'
+        required: true
+      responses:
+        "200":
+          description: OK
+          content:
+            '*/*':
+              schema:
+                $ref: '#/components/schemas/RestApiResponseSystemSettingsDTO'
+  /v2/projects/{projectId}/integrations/sanity/settings/secrets:
+    get:
+      tags:
+        - settings-controller
+      operationId: getSecrets
+      parameters:
+        - name: projectId
+          in: path
+          required: true
+          schema:
+            type: string
+      responses:
+        "200":
+          description: OK
+          content:
+            '*/*':
+              schema:
+                $ref: '#/components/schemas/RestApiResponseSecretsDTO'
+    put:
+      tags:
+        - settings-controller
+      operationId: updateSecrets
+      parameters:
+        - name: projectId
+          in: path
+          required: true
+          schema:
+            type: string
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/UpdateSecretsRequest'
+        required: true
+      responses:
+        "200":
+          description: OK
+          content:
+            '*/*':
+              schema:
+                $ref: '#/components/schemas/RestApiResponseSecretsDTO'
+    delete:
+      tags:
+        - settings-controller
+      operationId: deleteSecrets
+      parameters:
+        - name: projectId
+          in: path
+          required: true
+          schema:
+            type: string
+      responses:
+        "200":
+          description: OK
+          content:
+            '*/*':
+              schema:
+                $ref: '#/components/schemas/RestApiResponseResponseData'
+  /v2/projects/{projectId}/integrations/sanity/settings/schemas:
+    put:
+      tags:
+        - settings-controller
+      operationId: createSchema
+      parameters:
+        - name: projectId
+          in: path
+          required: true
+          schema:
+            type: string
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/SchemaImportDTO'
+        required: true
+      responses:
+        "200":
+          description: OK
+          content:
+            '*/*':
+              schema:
+                $ref: '#/components/schemas/RestApiResponseResponseData'
+  /v2/projects/{projectId}/integrations/sanity/settings:
+    get:
+      tags:
+        - settings-controller
+      operationId: getSettings
+      parameters:
+        - name: projectId
+          in: path
+          required: true
+          schema:
+            type: string
+      responses:
+        "200":
+          description: OK
+          content:
+            '*/*':
+              schema:
+                $ref: '#/components/schemas/RestApiResponseSettingsDTO'
+    post:
+      tags:
+        - create-settings-controller
+      operationId: createSettings
+      parameters:
+        - name: projectId
+          in: path
+          required: true
+          schema:
+            type: string
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/CreateSettingsRequest'
+        required: true
+      responses:
+        "200":
+          description: OK
+          content:
+            '*/*':
+              schema:
+                $ref: '#/components/schemas/RestApiResponseSettingsDTO'
+  /v2/projects/{projectId}/integrations/sanity/assets/{assetUid}/locales/{localeId}:
+    post:
+      tags:
+        - assets-controller
+      operationId: saveAssetTranslation
+      parameters:
+        - name: assetUid
+          in: path
+          required: true
+          schema:
+            type: string
+        - name: localeId
+          in: path
+          required: true
+          schema:
+            type: string
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/DeliverTranslationsRequest'
+        required: true
+      responses:
+        "200":
+          description: OK
+          content:
+            '*/*':
+              schema:
+                $ref: '#/components/schemas/RestApiResponseTargetAssetDetails'
+  /v2/projects/{projectId}/integrations/sanity/dictionary/sanity-projects:
+    get:
+      tags:
+        - dictionary-controller
+      operationId: getSanityProjects
+      responses:
+        "200":
+          description: OK
+          content:
+            '*/*':
+              schema:
+                $ref: '#/components/schemas/RestApiResponseListResponseSanityProjectDTO'
+  /v2/projects/{projectId}/integrations/sanity/dictionary/sanity-projects/{sanityProjectId}/datasets:
+    get:
+      tags:
+        - dictionary-controller
+      operationId: getProjectDatasets
+      parameters:
+        - name: sanityProjectId
+          in: path
+          required: true
+          schema:
+            type: string
+      responses:
+        "200":
+          description: OK
+          content:
+            '*/*':
+              schema:
+                $ref: '#/components/schemas/RestApiResponseListResponseProjectDatasetDTO'
+  /v2/projects/{projectId}/integrations/sanity/dictionary/locales:
+    get:
+      tags:
+        - dictionary-controller
+      operationId: getExternalLocales
+      responses:
+        "200":
+          description: OK
+          content:
+            '*/*':
+              schema:
+                $ref: '#/components/schemas/RestApiResponseListResponseLocaleDTO'
+  /v2/projects/{projectId}/integrations/sanity/dictionary/custom-property-actions:
+    get:
+      tags:
+        - dictionary-controller
+      operationId: getCustomPropertyActions
+      responses:
+        "200":
+          description: OK
+          content:
+            '*/*':
+              schema:
+                $ref: '#/components/schemas/RestApiResponseListResponsePropertyTypeTranslationActionsResponseDTO'
+  /v2/projects/{projectId}/integrations/sanity/dictionary/content-types:
+    get:
+      tags:
+        - dictionary-controller
+      operationId: listContentTypes
+      responses:
+        "200":
+          description: OK
+          content:
+            '*/*':
+              schema:
+                $ref: '#/components/schemas/RestApiResponseListResponseContentTypeDTO'
+  /v2/projects/{projectId}/integrations/sanity/assets:
+    get:
+      tags:
+        - assets-controller
+      operationId: getAssetList
+      parameters:
+        - name: request
+          in: query
+          required: true
+          schema:
+            $ref: '#/components/schemas/ListAssetsRequest'
+      responses:
+        "200":
+          description: OK
+          content:
+            '*/*':
+              schema:
+                $ref: '#/components/schemas/RestApiResponseListWithNextPageTokenAssetDetails'
+  /v2/projects/{projectId}/integrations/sanity/assets/{assetUid}/related:
+    get:
+      tags:
+        - assets-controller
+      operationId: getRelatedAssets
+      parameters:
+        - name: assetUid
+          in: path
+          required: true
+          schema:
+            type: string
+      responses:
+        "200":
+          description: OK
+          content:
+            '*/*':
+              schema:
+                $ref: '#/components/schemas/RestApiResponseListResponseAssetDetails'
+  /v2/projects/{projectId}/integrations/sanity/assets/{assetUid}/preview:
+    get:
+      tags:
+        - assets-controller
+      operationId: getPreview
+      parameters:
+        - name: assetUid
+          in: path
+          required: true
+          schema:
+            type: string
+      responses:
+        "200":
+          description: OK
+          content:
+            '*/*':
+              schema:
+                $ref: '#/components/schemas/RestApiResponsePreviewDTO'
+  /v2/projects/{projectId}/integrations/sanity/assets/{assetUid}/details:
+    get:
+      tags:
+        - assets-controller
+      operationId: getAssetDetails
+      parameters:
+        - name: assetUid
+          in: path
+          required: true
+          schema:
+            type: string
+      responses:
+        "200":
+          description: OK
+          content:
+            '*/*':
+              schema:
+                $ref: '#/components/schemas/RestApiResponseAssetDetails'
+  /v2/projects/{projectId}/integrations/sanity/assets/{assetUid}/content:
+    get:
+      tags:
+        - assets-controller
+      operationId: getAssetContent
+      parameters:
+        - name: assetUid
+          in: path
+          required: true
+          schema:
+            type: string
+      responses:
+        "200":
+          description: OK
+          content:
+            '*/*':
+              schema:
+                $ref: '#/components/schemas/RestApiResponseAssetContentDTO'
+components:
+  schemas:
+    SanitySettingsDTO:
+      required:
+        - dataset
+        - sanityProjectId
+      type: object
+      properties:
+        sanityProjectId:
+          type: string
+        dataset:
+          type: string
+        externalLinkPattern:
+          pattern: "(?i).+\\{DOC_TYPE\\}.+\\{DOC_UID\\}.*"
+          type: string
+    UpdateUserSettingsRequest:
+      required:
+        - sanity
+      type: object
+      properties:
+        sanity:
+          $ref: '#/components/schemas/SanitySettingsDTO'
+    ResponseUserSettingsDTO:
+      type: object
+      properties:
+        code:
+          type: string
+          enum:
+            - SUCCESS
+            - GENERAL_ERROR
+            - VALIDATION_ERROR
+            - AUTHENTICATION_ERROR
+            - AUTHORIZATION_ERROR
+            - NOT_FOUND_ERROR
+            - MAINTENANCE_MODE_ERROR
+            - INSUFFICIENT_FUNDS_ERROR
+            - FILE_ALREADY_EXISTS_ERROR
+            - SERVICE_BUSY
+            - RESOURCE_LOCKED
+            - MAX_OPERATIONS_LIMIT_EXCEEDED
+            - ACCEPTED
+            - CREATED
+            - NO_CONTENT
+            - GONE
+    RestApiResponseUserSettingsDTO:
+      type: object
+      properties:
+        response:
+          $ref: '#/components/schemas/ResponseUserSettingsDTO'
+    SmartlingSettingsDTO:
+      required:
+        - namespace
+      type: object
+      properties:
+        namespace:
+          type: string
+          enum:
+            - ACCOUNT
+            - SHARE_ALL
+            - FILE_VERSIONS
+            - NO_VERSIONS
+        placeholderFormat:
+          type: string
+    UpdateSystemSettingsRequest:
+      required:
+        - smartling
+      type: object
+      properties:
+        smartling:
+          $ref: '#/components/schemas/SmartlingSettingsDTO'
+    ResponseSystemSettingsDTO:
+      type: object
+      properties:
+        code:
+          type: string
+          enum:
+            - SUCCESS
+            - GENERAL_ERROR
+            - VALIDATION_ERROR
+            - AUTHENTICATION_ERROR
+            - AUTHORIZATION_ERROR
+            - NOT_FOUND_ERROR
+            - MAINTENANCE_MODE_ERROR
+            - INSUFFICIENT_FUNDS_ERROR
+            - FILE_ALREADY_EXISTS_ERROR
+            - SERVICE_BUSY
+            - RESOURCE_LOCKED
+            - MAX_OPERATIONS_LIMIT_EXCEEDED
+            - ACCEPTED
+            - CREATED
+            - NO_CONTENT
+            - GONE
+    RestApiResponseSystemSettingsDTO:
+      type: object
+      properties:
+        response:
+          $ref: '#/components/schemas/ResponseSystemSettingsDTO'
+    UpdateSecretsRequest:
+      required:
+        - apiToken
+      type: object
+      properties:
+        apiToken:
+          type: string
+    ResponseSecretsDTO:
+      type: object
+      properties:
+        code:
+          type: string
+          enum:
+            - SUCCESS
+            - GENERAL_ERROR
+            - VALIDATION_ERROR
+            - AUTHENTICATION_ERROR
+            - AUTHORIZATION_ERROR
+            - NOT_FOUND_ERROR
+            - MAINTENANCE_MODE_ERROR
+            - INSUFFICIENT_FUNDS_ERROR
+            - FILE_ALREADY_EXISTS_ERROR
+            - SERVICE_BUSY
+            - RESOURCE_LOCKED
+            - MAX_OPERATIONS_LIMIT_EXCEEDED
+            - ACCEPTED
+            - CREATED
+            - NO_CONTENT
+            - GONE
+    RestApiResponseSecretsDTO:
+      type: object
+      properties:
+        response:
+          $ref: '#/components/schemas/ResponseSecretsDTO'
+    SanityContentTypeDTO:
+      required:
+        - fields
+        - name
+        - type
+      type: object
+      properties:
+        name:
+          type: string
+        type:
+          type: string
+        title:
+          type: string
+        fields:
+          type: array
+          items:
+            $ref: '#/components/schemas/SanityFieldDTO'
+        preview:
+          $ref: '#/components/schemas/SanityPreviewDTO'
+    SanityFieldDTO:
+      required:
+        - to
+        - type
+      type: object
+      properties:
+        title:
+          type: string
+        name:
+          type: string
+        type:
+          type: string
+        description:
+          type: string
+        to:
+          type: array
+          items:
+            $ref: '#/components/schemas/SanityFieldDTO'
+        options:
+          $ref: '#/components/schemas/SanityFieldOptionsDTO'
+    SanityFieldOptionsDTO:
+      type: object
+      properties:
+        source:
+          type: string
+        maxLength:
+          type: integer
+          format: int32
+    SanityLanguageDTO:
+      required:
+        - id
+        - isDefault
+        - title
+      type: object
+      properties:
+        id:
+          type: string
+        title:
+          type: string
+        isDefault:
+          type: boolean
+    SanityPreviewDTO:
+      type: object
+      properties:
+        select:
+          $ref: '#/components/schemas/SanityPreviewSelectDTO'
+    SanityPreviewSelectDTO:
+      type: object
+      properties:
+        title:
+          type: string
+    SchemaImportDTO:
+      required:
+        - contentTypes
+        - languages
+      type: object
+      properties:
+        languages:
+          type: array
+          items:
+            $ref: '#/components/schemas/SanityLanguageDTO'
+        contentTypes:
+          type: array
+          items:
+            $ref: '#/components/schemas/SanityContentTypeDTO'
+    ResponseResponseData:
+      type: object
+      properties:
+        code:
+          type: string
+          enum:
+            - SUCCESS
+            - GENERAL_ERROR
+            - VALIDATION_ERROR
+            - AUTHENTICATION_ERROR
+            - AUTHORIZATION_ERROR
+            - NOT_FOUND_ERROR
+            - MAINTENANCE_MODE_ERROR
+            - INSUFFICIENT_FUNDS_ERROR
+            - FILE_ALREADY_EXISTS_ERROR
+            - SERVICE_BUSY
+            - RESOURCE_LOCKED
+            - MAX_OPERATIONS_LIMIT_EXCEEDED
+            - ACCEPTED
+            - CREATED
+            - NO_CONTENT
+            - GONE
+    RestApiResponseResponseData:
+      type: object
+      properties:
+        response:
+          $ref: '#/components/schemas/ResponseResponseData'
+    CreateSettingsRequest:
+      required:
+        - title
+      type: object
+      properties:
+        title:
+          type: string
+    ResponseSettingsDTO:
+      type: object
+      properties:
+        code:
+          type: string
+          enum:
+            - SUCCESS
+            - GENERAL_ERROR
+            - VALIDATION_ERROR
+            - AUTHENTICATION_ERROR
+            - AUTHORIZATION_ERROR
+            - NOT_FOUND_ERROR
+            - MAINTENANCE_MODE_ERROR
+            - INSUFFICIENT_FUNDS_ERROR
+            - FILE_ALREADY_EXISTS_ERROR
+            - SERVICE_BUSY
+            - RESOURCE_LOCKED
+            - MAX_OPERATIONS_LIMIT_EXCEEDED
+            - ACCEPTED
+            - CREATED
+            - NO_CONTENT
+            - GONE
+    RestApiResponseSettingsDTO:
+      type: object
+      properties:
+        response:
+          $ref: '#/components/schemas/ResponseSettingsDTO'
+    DeliverTranslationsRequest:
+      required:
+        - content
+      type: object
+      properties:
+        content:
+          type: string
+    ResponseTargetAssetDetails:
+      type: object
+      properties:
+        code:
+          type: string
+          enum:
+            - SUCCESS
+            - GENERAL_ERROR
+            - VALIDATION_ERROR
+            - AUTHENTICATION_ERROR
+            - AUTHORIZATION_ERROR
+            - NOT_FOUND_ERROR
+            - MAINTENANCE_MODE_ERROR
+            - INSUFFICIENT_FUNDS_ERROR
+            - FILE_ALREADY_EXISTS_ERROR
+            - SERVICE_BUSY
+            - RESOURCE_LOCKED
+            - MAX_OPERATIONS_LIMIT_EXCEEDED
+            - ACCEPTED
+            - CREATED
+            - NO_CONTENT
+            - GONE
+    RestApiResponseTargetAssetDetails:
+      type: object
+      properties:
+        response:
+          $ref: '#/components/schemas/ResponseTargetAssetDetails'
+    ResponseListResponseSanityProjectDTO:
+      type: object
+      properties:
+        code:
+          type: string
+          enum:
+            - SUCCESS
+            - GENERAL_ERROR
+            - VALIDATION_ERROR
+            - AUTHENTICATION_ERROR
+            - AUTHORIZATION_ERROR
+            - NOT_FOUND_ERROR
+            - MAINTENANCE_MODE_ERROR
+            - INSUFFICIENT_FUNDS_ERROR
+            - FILE_ALREADY_EXISTS_ERROR
+            - SERVICE_BUSY
+            - RESOURCE_LOCKED
+            - MAX_OPERATIONS_LIMIT_EXCEEDED
+            - ACCEPTED
+            - CREATED
+            - NO_CONTENT
+            - GONE
+    RestApiResponseListResponseSanityProjectDTO:
+      type: object
+      properties:
+        response:
+          $ref: '#/components/schemas/ResponseListResponseSanityProjectDTO'
+    ResponseListResponseProjectDatasetDTO:
+      type: object
+      properties:
+        code:
+          type: string
+          enum:
+            - SUCCESS
+            - GENERAL_ERROR
+            - VALIDATION_ERROR
+            - AUTHENTICATION_ERROR
+            - AUTHORIZATION_ERROR
+            - NOT_FOUND_ERROR
+            - MAINTENANCE_MODE_ERROR
+            - INSUFFICIENT_FUNDS_ERROR
+            - FILE_ALREADY_EXISTS_ERROR
+            - SERVICE_BUSY
+            - RESOURCE_LOCKED
+            - MAX_OPERATIONS_LIMIT_EXCEEDED
+            - ACCEPTED
+            - CREATED
+            - NO_CONTENT
+            - GONE
+    RestApiResponseListResponseProjectDatasetDTO:
+      type: object
+      properties:
+        response:
+          $ref: '#/components/schemas/ResponseListResponseProjectDatasetDTO'
+    ResponseListResponseLocaleDTO:
+      type: object
+      properties:
+        code:
+          type: string
+          enum:
+            - SUCCESS
+            - GENERAL_ERROR
+            - VALIDATION_ERROR
+            - AUTHENTICATION_ERROR
+            - AUTHORIZATION_ERROR
+            - NOT_FOUND_ERROR
+            - MAINTENANCE_MODE_ERROR
+            - INSUFFICIENT_FUNDS_ERROR
+            - FILE_ALREADY_EXISTS_ERROR
+            - SERVICE_BUSY
+            - RESOURCE_LOCKED
+            - MAX_OPERATIONS_LIMIT_EXCEEDED
+            - ACCEPTED
+            - CREATED
+            - NO_CONTENT
+            - GONE
+    RestApiResponseListResponseLocaleDTO:
+      type: object
+      properties:
+        response:
+          $ref: '#/components/schemas/ResponseListResponseLocaleDTO'
+    ResponseListResponsePropertyTypeTranslationActionsResponseDTO:
+      type: object
+      properties:
+        code:
+          type: string
+          enum:
+            - SUCCESS
+            - GENERAL_ERROR
+            - VALIDATION_ERROR
+            - AUTHENTICATION_ERROR
+            - AUTHORIZATION_ERROR
+            - NOT_FOUND_ERROR
+            - MAINTENANCE_MODE_ERROR
+            - INSUFFICIENT_FUNDS_ERROR
+            - FILE_ALREADY_EXISTS_ERROR
+            - SERVICE_BUSY
+            - RESOURCE_LOCKED
+            - MAX_OPERATIONS_LIMIT_EXCEEDED
+            - ACCEPTED
+            - CREATED
+            - NO_CONTENT
+            - GONE
+    RestApiResponseListResponsePropertyTypeTranslationActionsResponseDTO:
+      type: object
+      properties:
+        response:
+          $ref: '#/components/schemas/ResponseListResponsePropertyTypeTranslationActionsResponseDTO'
+    ResponseListResponseContentTypeDTO:
+      type: object
+      properties:
+        code:
+          type: string
+          enum:
+            - SUCCESS
+            - GENERAL_ERROR
+            - VALIDATION_ERROR
+            - AUTHENTICATION_ERROR
+            - AUTHORIZATION_ERROR
+            - NOT_FOUND_ERROR
+            - MAINTENANCE_MODE_ERROR
+            - INSUFFICIENT_FUNDS_ERROR
+            - FILE_ALREADY_EXISTS_ERROR
+            - SERVICE_BUSY
+            - RESOURCE_LOCKED
+            - MAX_OPERATIONS_LIMIT_EXCEEDED
+            - ACCEPTED
+            - CREATED
+            - NO_CONTENT
+            - GONE
+    RestApiResponseListResponseContentTypeDTO:
+      type: object
+      properties:
+        response:
+          $ref: '#/components/schemas/ResponseListResponseContentTypeDTO'
+    ListAssetsRequest:
+      required:
+        - assetType
+        - limit
+      type: object
+      properties:
+        nextPageToken:
+          type: string
+        limit:
+          type: integer
+          format: int32
+        assetType:
+          type: string
+          enum:
+            - DOCUMENT
+        sortBy:
+          type: string
+        orderBy:
+          type: string
+          enum:
+            - ASC
+            - DESC
+        contentTypeUid:
+          type: string
+        searchTerm:
+          type: string
+    ResponseListWithNextPageTokenAssetDetails:
+      type: object
+      properties:
+        code:
+          type: string
+          enum:
+            - SUCCESS
+            - GENERAL_ERROR
+            - VALIDATION_ERROR
+            - AUTHENTICATION_ERROR
+            - AUTHORIZATION_ERROR
+            - NOT_FOUND_ERROR
+            - MAINTENANCE_MODE_ERROR
+            - INSUFFICIENT_FUNDS_ERROR
+            - FILE_ALREADY_EXISTS_ERROR
+            - SERVICE_BUSY
+            - RESOURCE_LOCKED
+            - MAX_OPERATIONS_LIMIT_EXCEEDED
+            - ACCEPTED
+            - CREATED
+            - NO_CONTENT
+            - GONE
+    RestApiResponseListWithNextPageTokenAssetDetails:
+      type: object
+      properties:
+        response:
+          $ref: '#/components/schemas/ResponseListWithNextPageTokenAssetDetails'
+    ResponseListResponseAssetDetails:
+      type: object
+      properties:
+        code:
+          type: string
+          enum:
+            - SUCCESS
+            - GENERAL_ERROR
+            - VALIDATION_ERROR
+            - AUTHENTICATION_ERROR
+            - AUTHORIZATION_ERROR
+            - NOT_FOUND_ERROR
+            - MAINTENANCE_MODE_ERROR
+            - INSUFFICIENT_FUNDS_ERROR
+            - FILE_ALREADY_EXISTS_ERROR
+            - SERVICE_BUSY
+            - RESOURCE_LOCKED
+            - MAX_OPERATIONS_LIMIT_EXCEEDED
+            - ACCEPTED
+            - CREATED
+            - NO_CONTENT
+            - GONE
+    RestApiResponseListResponseAssetDetails:
+      type: object
+      properties:
+        response:
+          $ref: '#/components/schemas/ResponseListResponseAssetDetails'
+    ResponsePreviewDTO:
+      type: object
+      properties:
+        code:
+          type: string
+          enum:
+            - SUCCESS
+            - GENERAL_ERROR
+            - VALIDATION_ERROR
+            - AUTHENTICATION_ERROR
+            - AUTHORIZATION_ERROR
+            - NOT_FOUND_ERROR
+            - MAINTENANCE_MODE_ERROR
+            - INSUFFICIENT_FUNDS_ERROR
+            - FILE_ALREADY_EXISTS_ERROR
+            - SERVICE_BUSY
+            - RESOURCE_LOCKED
+            - MAX_OPERATIONS_LIMIT_EXCEEDED
+            - ACCEPTED
+            - CREATED
+            - NO_CONTENT
+            - GONE
+    RestApiResponsePreviewDTO:
+      type: object
+      properties:
+        response:
+          $ref: '#/components/schemas/ResponsePreviewDTO'
+    ResponseAssetDetails:
+      type: object
+      properties:
+        code:
+          type: string
+          enum:
+            - SUCCESS
+            - GENERAL_ERROR
+            - VALIDATION_ERROR
+            - AUTHENTICATION_ERROR
+            - AUTHORIZATION_ERROR
+            - NOT_FOUND_ERROR
+            - MAINTENANCE_MODE_ERROR
+            - INSUFFICIENT_FUNDS_ERROR
+            - FILE_ALREADY_EXISTS_ERROR
+            - SERVICE_BUSY
+            - RESOURCE_LOCKED
+            - MAX_OPERATIONS_LIMIT_EXCEEDED
+            - ACCEPTED
+            - CREATED
+            - NO_CONTENT
+            - GONE
+    RestApiResponseAssetDetails:
+      type: object
+      properties:
+        response:
+          $ref: '#/components/schemas/ResponseAssetDetails'
+    ResponseAssetContentDTO:
+      type: object
+      properties:
+        code:
+          type: string
+          enum:
+            - SUCCESS
+            - GENERAL_ERROR
+            - VALIDATION_ERROR
+            - AUTHENTICATION_ERROR
+            - AUTHORIZATION_ERROR
+            - NOT_FOUND_ERROR
+            - MAINTENANCE_MODE_ERROR
+            - INSUFFICIENT_FUNDS_ERROR
+            - FILE_ALREADY_EXISTS_ERROR
+            - SERVICE_BUSY
+            - RESOURCE_LOCKED
+            - MAX_OPERATIONS_LIMIT_EXCEEDED
+            - ACCEPTED
+            - CREATED
+            - NO_CONTENT
+            - GONE
+    RestApiResponseAssetContentDTO:
+      type: object
+      properties:
+        response:
+          $ref: '#/components/schemas/ResponseAssetContentDTO'
